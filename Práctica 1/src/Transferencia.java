@@ -4,7 +4,6 @@ public class Transferencia {
     private double c;
     private double transferencias;
     private Cuenta cuenta;
-    private  Transferencia[][] transferenciass = new Transferencia[50][50];
 
 
     public Transferencia(double c, double transferencias, Cuenta cuenta) {
@@ -12,31 +11,25 @@ public class Transferencia {
         this.transferencias = transferencias;
         this.cuenta = cuenta;
     }
-    public Transferencia(){ }
 
+    public Transferencia(){ }
     public double getC() {
         return c;
     }
-
     public void setC(double c) {
         this.c = c;
     }
-
     public double getTransferencias() {
         return transferencias;
     }
-
-    public void setTransferencias(double transferencias) {
-        this.transferencias = transferencias;
-    }
-
+    public void setTransferencias(double transferencias) { this.transferencias = transferencias; }
     public Cuenta getCuenta() {
         return cuenta;
     }
-
     public void setCuenta(Cuenta cuenta) {
         this.cuenta = cuenta;
     }
+
 
     public Transferencia creartransferencia(Cuenta cuenta) {
         Scanner teclado = new Scanner(System.in);

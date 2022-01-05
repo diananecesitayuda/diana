@@ -14,23 +14,18 @@ public class fecha {
     public int getDia() {
         return dia;
     }
-
     public void setDia(int dia) {
         this.dia = dia;
     }
-
     public int getMes() {
         return mes;
     }
-
     public void setMes(int mes) {
         this.mes = mes;
     }
-
     public int getAño() {
         return año;
     }
-
     public void setAño(int año) {
         this.año = año;
     }
@@ -43,7 +38,6 @@ public class fecha {
     public static boolean esBisiesto(int año) {
         return (año % 4 == 0 && año % 100 != 0) || año % 400 == 0;
     }
-
 
     public static boolean comprobarFecha(int dia, int mes, int año) {
         boolean fechaCorrecta = (año >= 1920 && año <= 2003 && mes >= 1 && mes <= 12 && dia >= 1 && dia <= 31);

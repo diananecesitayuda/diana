@@ -1,3 +1,5 @@
+import javax.swing.plaf.synth.SynthOptionPaneUI;
+import javax.xml.transform.sax.SAXSource;
 import java.util.Scanner;
 
 public class UpmBank {
@@ -8,23 +10,26 @@ public class UpmBank {
 
         int continuar = 1;
         int dia, mes , año;
-        int contadors = 0;
+        int contadorclientes = 0;
+        int contadorcuentas = 0;
 
         String nombre = null;
         String correo = null;
         fecha nueva = null;
 
         menu menu = new menu();
+        mostrar mostrar = new mostrar();
+
         Cliente cliente = new Cliente();
         Cliente[] clientes = new Cliente[20];
         Cuenta cuenta = new Cuenta();
-        Cuenta[] cuentas = new Cuenta[200];
+        Cuenta[] cuentas = new Cuenta[10];
 
         Extraer extraer = new Extraer();
         Depositar depositar = new Depositar();
         Transferencia transferencia = new Transferencia();
         Prestamo prestamo = new Prestamo();
-        mostrar mostrar = new mostrar();
+
 
         do {
             switch (menu.menu(teclado)) {
@@ -49,17 +54,12 @@ public class UpmBank {
 
                     } while (fecha.comprobarFecha(dia, mes, año) == false);
 
-                    cliente.crearCliente(clientes,cliente,contadors);
+                    cliente.crearCliente(clientes,cliente,contadorclientes);
 
-                    if(cliente.comprobarCliente(clientes,contadors) == true ) {
-                        contadors++;
-                    }
+                    if(cliente.comprobarCliente(clientes,contadorclientes) == false ) {
+                        contadorclientes++;
 
-                    System.out.println(clientes[0]);
-                    System.out.println(clientes[1]);
-                    System.out.println(clientes[2]);
-                    System.out.println(clientes[3]);
-
+                    }else {System.out.println("ya existe un cliente así."); }
 
 
                     System.out.print("¿Quieres continuar? 1 para continuar y 0 para salir: ");
@@ -70,18 +70,22 @@ public class UpmBank {
                 case 2:
                     boolean correct = true;
 
-
                     do {
                         if (cliente.getCorreo() != null) {
-                            System.out.println("Introduce tu correo: ");
-                            correo = teclado.next();
-                            if (cliente.getCorreo().equals(correo)) {
-                                correct = true;
-                                cuenta = cuenta.crearcuenta(cliente);
-                            } else {
-                                System.out.println("correo incorrecto");
-                                correct = false;
-                            }
+
+                            cuenta.crearcuenta(clientes,cliente,cuentas,cuenta,contadorcuentas);
+                            //////////////////////////////////////////// PONERLO EN LA FUNCION ENLAZAR ??
+
+                            if(cuenta.comprobarCuenta(cuentas,contadorcuentas)==false){
+                                cliente.guardarCuenta(cuentas,contadorcuentas,cuenta);
+                                cliente.enlazarCuentaCliente();
+                                contadorcuentas++;
+
+                            }else System.out.println("ya existe una cuenta");
+
+                            //////////////////////////////////////////////////
+
+
                         } else {
                             System.out.println("Necesitas primero darte de alta");
                             correct = true;

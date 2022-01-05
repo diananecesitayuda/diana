@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Cliente {
@@ -7,77 +8,70 @@ public class Cliente {
     private String correo;
     private long DNI;
     private char letra;
+    private int contadorclientes;
 
-    private int cuentitas;
+    private Cuenta[] cuentas = new Cuenta[10];
+    private Cuenta cuenta;
+    private Cliente[] clientes = new Cliente[20];
     private Cliente cliente;
-    private Cuenta[] cuentas;
 
-
-    public Cliente(String nombre, String apellidos, String correo, long DNI, char letra) {
+    public Cliente(String nombre, String apellidos, String correo, long DNI, char letra, Cuenta[] cuentas) {
         this.nombre = nombre;
         this.apellidos = apellidos;
         this.correo = correo;
         this.DNI = DNI;
         this.letra = letra;
-
+        this.cuentas = null;
     }
 
     public Cliente() {
     }
 
+
     @Override
     public String toString() {
-        return "cliente{" +
+        return "Cliente{" +
                 "nombre='" + nombre + '\'' +
                 ", apellidos='" + apellidos + '\'' +
                 ", correo='" + correo + '\'' +
                 ", DNI=" + DNI +
                 ", letra=" + letra +
+                ", cuentas=" + Arrays.toString(cuentas) +
                 '}';
     }
 
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public String getApellidos() {
-        return apellidos;
-    }
-
-    public void setApellidos(String apellidos) {
-        this.apellidos = apellidos;
-    }
-
-    public String getCorreo() {
-        return correo;
-    }
-
-    public void setCorreo(String correo) {
-        this.correo = correo;
-    }
-
-    public long getDNI() {
-        return DNI;
-    }
-
-    public void setDNI(long DNI) {
-        this.DNI = DNI;
-    }
-
-    public char getLetra() {
-        return letra;
-    }
-
-    public void setLetra(char letra) {
-        this.letra = letra;
-    }
+    public String getNombre() {return nombre;}
+    public void setNombre(String nombre) {this.nombre = nombre;}
+    public String getApellidos() {return apellidos;}
+    public void setApellidos(String apellidos) {this.apellidos = apellidos;}
+    public String getCorreo() {return correo;}
+    public void setCorreo(String correo) {this.correo = correo;}
+    public long getDNI() {return DNI;}
+    public void setDNI(long DNI) {this.DNI = DNI;}
+    public char getLetra() {return letra;}
+    public void setLetra(char letra) {this.letra = letra;}
 
 
-    public void crearCliente(Cliente[] clientes, Cliente cliente, int contadors) {
+    ////////////////////////////////////////////////////////////////////------------COMPROBAR-----
+
+    public Cliente[] getClientes() {return clientes;}
+    public void setClientes(Cliente[] clientes) {this.clientes = clientes;}
+
+    public int getContadorclientes() {return contadorclientes;}
+    public void setContadorclientes(int contadorclientes) {this.contadorclientes = contadorclientes;}
+
+    public Cuenta[] getCuentas() {return cuentas;}
+    public void setCuentas(Cuenta[] cuentas) {this.cuentas = cuentas;}
+
+    public Cuenta getCuenta() {return cuenta;}
+    public void setCuenta(Cuenta cuenta) {this.cuenta = cuenta;}
+
+    public Cliente getCliente() {return cliente;}
+    public void setCliente(Cliente cliente) {this.cliente = cliente;}
+    /////////////////////////////////////////////////////////////////7
+
+
+    public Cliente crearCliente(Cliente[] clientes, Cliente cliente, int contadorclientes) {
 
         Scanner tecladoNumerico = new Scanner(System.in);
         Scanner teclado = new Scanner(System.in);
@@ -90,65 +84,71 @@ public class Cliente {
         this.apellidos = teclado.nextLine();
 
         do {
-            System.out.print("Introduce tu DNI sin la letra: ");
-            this.DNI = tecladoNumerico.nextLong();
+                System.out.print("Introduce tu DNI sin la letra: ");
+                this.DNI = tecladoNumerico.nextLong();
 
-            System.out.print("Introduce la letra de tu DNI en mayúscula: ");
-            this.letra = teclado.nextLine().charAt(0);
-            int resto = (int) DNI % 23;
-            int resultado = 25;
-            char[] letrasDni = new char[]{'T', 'R', 'W', 'A', 'G', 'M', 'Y', 'F', 'P', 'D',
-                    'X', 'B', 'N', 'J', 'Z', 'S', 'Q', 'V', 'H', 'L', 'C', 'K', 'E'};
-
-            for (int i = 0; i < letrasDni.length; i++) {
-                if (this.letra == letrasDni[i]) {
-                    resultado = i;
-                }
-            }
-
-            if (resto == resultado) {
-                correcto = true;
-                System.out.println("DNI CORRECTO");
                 do {
-                    System.out.println("Introduce tu correo: ");
-                    this.correo = teclado.next();
+                    System.out.print("Introduce la letra de tu DNI en mayúscula: ");
+                    this.letra = teclado.nextLine().charAt(0);
+                    int resto = (int) DNI % 23;
+                    int resultado = 25;
+                    char[] letrasDni = new char[]{'T', 'R', 'W', 'A', 'G', 'M', 'Y', 'F', 'P', 'D',
+                            'X', 'B', 'N', 'J', 'Z', 'S', 'Q', 'V', 'H', 'L', 'C', 'K', 'E'};
 
-                    if (correo.contains("@upm.es") || correo.contains("@alumnos.upm.es")) {
-                        for (int i = 0; i < correo.length(); i++) {
-                            if ((correo.charAt(i) >= 64 && correo.charAt(i) <= 90)
-                                    || (correo.charAt(i) >= 97 && correo.charAt(i) <= 122)
-                                    || (correo.charAt(i) >= 46 && correo.charAt(i) <= 57)) {
-                                correcto = true;
+                    for (int i = 0; i < letrasDni.length; i++) {
+                        if (this.letra == letrasDni[i]) {
+                            resultado = i;
+                        }
+                    }
+
+                    if (resto == resultado) {
+                        correcto = true;
+                        System.out.println("DNI CORRECTO");
+                        do {
+                            System.out.println("Introduce tu correo: ");
+                            this.correo = teclado.next();
+
+                            if (correo.contains("@upm.es") || correo.contains("@alumnos.upm.es")) {
+                                for (int i = 0; i < correo.length(); i++) {
+                                    if ((correo.charAt(i) >= 64 && correo.charAt(i) <= 90)
+                                            || (correo.charAt(i) >= 97 && correo.charAt(i) <= 122)
+                                            || (correo.charAt(i) >= 46 && correo.charAt(i) <= 57)) {
+                                        correcto = true;
+                                    } else {
+                                        System.out.println("INCORRECTO");
+                                        correcto = false;
+                                        break;
+                                    }
+                                }
+                                if (correcto) {
+                                    System.out.println("CORREO CORRECTO");
+
+                                    cliente = new Cliente(nombre, apellidos, correo, DNI, letra, cuentas);
+
+                                    if (comprobarCliente(clientes, contadorclientes) == false) {
+                                        guardarClientes( contadorclientes, cliente);
+                                    }else System.out.println("no se guarda");
+                                }
+
                             } else {
-                                System.out.println("INCORRECTO");
                                 correcto = false;
-                                break;
+                                System.out.println("CORREO INCORRECTO");
                             }
-                        }
-                        if (correcto) {
-                            System.out.println("CORREO CORRECTO");
 
-                            cliente = new Cliente(nombre, apellidos, correo, DNI, letra);
-
-                            if (comprobarCliente(clientes,contadors)==true) {
-                                guardarClientes(clientes, contadors, cliente);
-                            } else System.out.println("ya existe una cuenta así");
-                        }
+                        } while (!correcto);
 
                     } else {
                         correcto = false;
-                        System.out.println("CORREO INCORRECTO");
+                        System.out.println("DNI INCORRECTO");
                     }
-
-            } while (!correcto) ;
-
-        } else{
-            correcto = false;
-            System.out.println("DNI INCORRECTO");
-        }
+                }while(!correcto);
         } while (!correcto);
 
+        return cliente;
     }
+
+
+
 
     public void imprimir(){
         System.out.println("NOMBRE   APELLIDOS   CORREO    DNI");
@@ -156,52 +156,126 @@ public class Cliente {
     }
 
 
-    public boolean comprobarCliente(Cliente[] clientes, int contadors){
 
-            for (int i = 0; i < contadors; i++) {
+
+    public boolean comprobarCliente(Cliente[] clientes, int contadorclientes){
+
+        boolean comprobar = false;
+
+            for (int i = 0; i < contadorclientes; i++) {
+
                 if(clientes[i] != null) {
+
                     if (clientes[i].getCorreo().equals(this.correo) || clientes[i].getDNI() == this.DNI) {
-                        return false;
-                    }
-                }
-            } contadors++;
-        return true;
-    }
 
-    public void guardarClientes(Cliente[] clientes, int contadors, Cliente cliente) {
-        if (cliente != null) {
-            if (contadors == 0) {
-                clientes[0] = cliente;
+                        comprobar = false;
+
+                    }else System.out.println(" no hay parecidos en clientes");
+
+                    comprobar = true;
+
+                } else System.out.println("clientes lista null");
+
+                comprobar = true;
             }
-            else if (contadors > 0 && contadors < 19) {
-                    clientes[contadors++] = cliente;
-
-                } else if (contadors > 20)
-                    System.out.println("No puedes introducir más clientes");
-        }
+        return comprobar;
     }
 
-    public Cliente(Cliente cliente){
-        this.cliente = cliente;
-        this.cuentas = null;
-        this.cuentitas = cuentitas;
+
+    public void guardarClientes(int contadorclientes, Cliente cliente) {
+
+        if (cliente != null) {
+
+            if (contadorclientes == 0) {
+
+                clientes[0] = cliente;
+
+                ///////////////////////////////////////// BORRAR
+                System.out.println("Clientes: ");
+                for (int i = 0; i < contadorclientes; i++) {
+                    System.out.println(clientes[i]);
+                }
+                ///////////////////////////////////
+
+            } else if (contadorclientes > 0 && contadorclientes < 20) {
+
+                clientes[contadorclientes++] = cliente;
+
+                ///////////////////////////////////////// BORRAR
+                System.out.println("Clientes: ");
+                for (int i = 0; i < contadorclientes; i++) {
+                    System.out.println(clientes[i]);
+                }
+                ///////////////////////////////////
+
+            } else if (contadorclientes > 20)
+                System.out.println("No puedes introducir más clientes");
+
+        }else System.out.println("el cliente está vacío");
 
     }
-    public void enlazarCuentas(Cuenta[] acc){
-        cuentas = acc;
-    }
-    public Cuenta[] obtenerCuentas(Cuenta[] cuentas){
+
+
+
+
+    public Cuenta[] obtenerCuentas(Cuenta[] cuentas) {
         return cuentas;
     }
-    public void enlazarCuentitas(int numero){
-        cuentitas = numero;
-    }
-    public int obtenerCuentitas(int cuentitas){
-        return cuentitas;
-    }
-    public Cliente obtenerCliente(){
-        return cliente;
+
+    public Cuenta[] guardarCuenta(Cuenta[] cuentas,int contadorcuentas, Cuenta cuenta) {  /////////////////------------ esta funcion funciona correctamente :)
+
+        if (cuenta != null) {
+            if (contadorcuentas == 0) {
+                cuentas[0] = cuenta;
+
+                //////////////////////////////////              BORRAR
+                System.out.println("___________CUENTAS__________");
+
+                ///////////////////////////////////
+
+
+
+            } else if (contadorcuentas > 0 && contadorcuentas < 10) {
+                cuentas[contadorcuentas++] = cuenta;
+
+                //////////////////////////////////              BORRAR
+                System.out.println("___________CUENTAS__________");
+
+                ///////////////////////////////////
+
+
+            } else if (contadorcuentas > 10)
+
+                System.out.println("No puedes introducir más cuentas");
+
+        } else System.out.println("la cuenta está vacía");
+
+        return cuentas;
     }
 
+    public Cuenta[] enlazarCuentaCliente() {
+
+        String correo;
+        Scanner tec = new Scanner(System.in);
+        System.out.println("Introduzca un correo: ");
+        correo = tec.nextLine();
+
+        for (int i = 0; i < 10; i++) {
+
+            if(clientes[i] != null) {
+
+                if (clientes[i].getCorreo().equals(correo) ) {
+
+                    cuentas = clientes[i].obtenerCuentas(cuentas);
+                    System.out.println("cliente usado:");
+                    System.out.println(clientes[i]);
+                    System.out.println("-----------------");
+
+
+                } else System.out.println("correo incorrecto.");
+            } else System.out.println("clientes null");
+        }
+        return cuentas;
+    }
 
 }
